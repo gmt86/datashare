@@ -1,0 +1,82 @@
+<!-- Page d'inscription DataShare -->
+<app-card title="Créer un compte" [errorMessage]="errorMessage">
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="Saisissez votre email"
+        [ngClass]="{ 'is-invalid': submitted && form['email'].errors }"
+      />
+      @if (submitted && form['email'].errors) {
+        <div class="invalid-feedback">
+          @if (form['email'].errors!['required']) {
+            <div>L'email est requis.</div>
+          }
+          @if (form['email'].errors!['email']) {
+            <div>Format d'email invalide.</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="Saisissez votre mot de passe"
+        [ngClass]="{ 'is-invalid': submitted && form['password'].errors }"
+      />
+      @if (submitted && form['password'].errors) {
+        <div class="invalid-feedback">
+          @if (form['password'].errors!['required']) {
+            <div>Le mot de passe est requis.</div>
+          }
+          @if (form['password'].errors!['minlength']) {
+            <div>Le mot de passe doit contenir au moins 8 caractères.</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Confirmation mot de passe -->
+    <div class="form-group">
+      <label for="confirmPassword">Vérification du mot de passe</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="confirmPassword"
+        placeholder="Saisissez à nouveau le mot de passe"
+        [ngClass]="{ 'is-invalid': submitted && (form['confirmPassword'].errors || registerForm.errors?.['passwordMismatch']) }"
+      />
+      @if (submitted && form['confirmPassword'].errors?.['required']) {
+        <div class="invalid-feedback">
+          <div>La confirmation du mot de passe est requise.</div>
+        </div>
+      }
+      @if (submitted && registerForm.errors?.['passwordMismatch']) {
+        <div class="invalid-feedback">
+          <div>Les mots de passe ne correspondent pas.</div>
+        </div>
+      }
+    </div>
+
+    <!-- Lien vers login -->
+    <a routerLink="/login" class="link">J'ai déjà un compte</a>
+
+    <!-- Bouton soumettre -->
+    <button type="submit" class="btn-primary" [disabled]="isLoading">
+      {{ isLoading ? 'Chargement...' : 'Créer mon compte' }}
+    </button>
+
+  </form>
+
+</app-card>

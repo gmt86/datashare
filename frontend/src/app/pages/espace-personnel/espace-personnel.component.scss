@@ -1,0 +1,246 @@
+/* Layout deux colonnes — occupe tout l'espace disponible */
+.espace-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+/* Sidebar gauche */
+.sidebar {
+  width: 200px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1.5rem 1rem;
+  
+  .sidebar-link {
+    display: block;
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.95rem;
+    text-decoration: none;
+
+    &.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+  }
+}
+
+/* Contenu principal */
+.espace-content {
+  flex: 1;
+  background: #fdf5f3;
+  padding: 2rem;
+  border-radius: var(--border-radius-card) 0 0 var(--border-radius-card);
+}
+
+h2 {
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+/* Filtre Switch */
+.filter-switch {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 1.5rem;
+  background: #ffeee3;
+  border-radius: 20px;
+  padding: 0.3rem;
+  width: fit-content;
+
+  button {
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 15px;
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+
+    &.active {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    &:hover:not(.active) {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+/* Item fichier */
+.fichier-item {
+  background: #ffeee3;   
+  border-radius: var(--border-radius);
+  padding: 0.6rem 1.5rem;
+  margin-bottom: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  &.expire {
+    opacity: 0.7;
+  }
+}
+
+/* Infos fichier */
+.fichier-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  .fichier-nom {
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .fichier-statut {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+
+    &.expire {
+      color: var(--color-error);
+    }
+  }
+}
+
+.cadenas {
+  font-size: 0.9rem;
+  margin-right: 0.3rem;
+}
+
+/* Actions */
+.fichier-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Actions desktop/mobile */
+.actions-desktop {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions-mobile {
+  display: none;
+  position: relative;
+}
+
+.btn-danger,
+.btn-secondary {
+  padding: 0.4rem 0.8rem;
+  width: 110px;
+  text-align: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-danger {
+  background-color: #ffeee3;
+  color: var(--color-primary);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+}
+
+.btn-icon {   
+  font-size: 0.6rem;
+}
+
+.btn-icon-2 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Bouton trois points */
+.btn-menu {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text);
+  padding: 0 0.5rem;
+  font-weight: bold;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  min-width: 150px;
+  overflow: hidden;
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--color-text);
+
+    &:hover {
+      background: #ffeee3;
+    }
+  }
+}
+
+/* Message vide */
+.empty-message {
+  color: var(--color-text-light);
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Message expiré */
+.expire-message {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-style: italic;
+}
+
+/* Chargement */
+.loading {
+  color: var(--color-text-light);
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ===========================
+   RESPONSIVE MOBILE (≤ 430px)
+=========================== */
+@media (max-width: 430px) {
+
+  .actions-desktop {
+    display: none;
+  }
+
+  .actions-mobile {
+    display: block;
+  }
+
+  .fichier-item {
+    padding: 0.6rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+}

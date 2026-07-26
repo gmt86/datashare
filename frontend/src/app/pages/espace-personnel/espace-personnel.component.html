@@ -1,0 +1,87 @@
+<!-- Contenu Espace Personnel — uniquement la liste des fichiers -->
+
+<!-- Chargement -->
+@if (isLoading) {
+  <div class="loading">Chargement...</div>
+}
+
+<!-- Erreur -->
+@if (errorMessage) {
+  <div class="error-callout">{{ errorMessage }}</div>
+}
+
+<!-- Contenu -->
+@if (!isLoading && !errorMessage) {
+
+  <h2>Mes fichiers</h2>
+
+  <!-- Filtre Switch -->
+  <div class="filter-switch">
+    <button [class.active]="filtreActif === 'tous'" (click)="setFiltre('tous')">Tous</button>
+    <button [class.active]="filtreActif === 'actifs'" (click)="setFiltre('actifs')">Actifs</button>
+    <button [class.active]="filtreActif === 'expires'" (click)="setFiltre('expires')">Expiré</button>
+  </div>
+
+  <!-- Liste des fichiers -->
+  @if (fichiersFiltres.length === 0) {
+    <p class="empty-message">Aucun fichier trouvé.</p>
+  }
+
+  @for (fichier of fichiersFiltres; track fichier.id) {
+    <div class="fichier-item" [class.expire]="fichier.estExpire">
+
+      <div class="fichier-info">
+        <span class="fichier-nom">
+          📄 {{ fichier.nom }}          
+        </span>
+        <span class="fichier-statut" [class.expire]="fichier.estExpire">
+          @if (fichier.estExpire) {
+            Expiré
+          } @else {
+            Expire le {{ fichier.dateExpiration | date:'dd/MM/yyyy' }}
+          }
+        </span>
+      </div>
+
+      <div class="fichier-actions">
+
+        @if (fichier.estProtege) { 
+          <span class="cadenas">🔒</span> 
+        }
+
+      @if (!fichier.estExpire) {
+        <!-- Desktop : boutons visibles -->
+        <div class="actions-desktop">
+          <button class="btn-danger" (click)="supprimerFichier(fichier.id)">
+            <span class="btn-icon">🗑</span> Supprimer
+          </button>
+          <button class="btn-secondary" (click)="accederFichier(fichier.tokenTelechargement)">
+            Accéder <span class="btn-icon-2">→</span>
+          </button>
+        </div>
+
+        <!-- Mobile : trois points -->
+        <div class="actions-mobile">
+          <button class="btn-menu" (click)="toggleMenu(fichier.id)">⋮</button>
+          @if (menuOuvertId === fichier.id) {
+            <div class="dropdown-menu">
+              <button (click)="supprimerFichier(fichier.id); fermerMenus()">
+                🗑 Supprimer
+              </button>
+              <button (click)="accederFichier(fichier.tokenTelechargement); fermerMenus()">
+                Accéder →
+              </button>
+            </div>
+          }
+        </div>
+      }
+      @if (fichier.estExpire) {
+        <span class="expire-message">
+          Ce fichier a expiré, il n'est plus stocké chez nous
+        </span>
+      }
+    </div>
+
+    </div>
+  }
+}

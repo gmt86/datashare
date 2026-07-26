@@ -1,0 +1,242 @@
+/* Layout Espace Personnel — deux colonnes */
+.ep-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar gauche */
+.ep-sidebar {
+  width: 200px;
+  background: linear-gradient(to top, #e37069, #fdb48a);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .ep-sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem 1rem;
+  }
+
+  /* Header sidebar (logo + croix) */
+  .ep-sidebar-header {
+    display: flex;
+    flex-direction: row-reverse;    
+    align-items: center;
+    justify-content: flex-end;  /* aligne à gauche en row-reverse */
+    gap: 0.5rem; /* espace entre les deux */
+    margin-bottom: 2rem;
+  }
+
+  /* Logo DataShare */
+  .ep-logo {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  /* Bouton fermeture sidebar mobile */
+  .ep-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+  }
+
+  /* Navigation */
+  .ep-nav {
+    flex: 1;
+
+    .ep-nav-link {
+      display: block;
+      color: var(--color-text);
+      padding: 0.6rem 1rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: none;
+      background: #ffeee3;
+    }
+  }
+
+  /* Footer copyright */
+  .ep-footer {
+    p {
+      color: white;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+  }
+
+  /* Overlay mobile */
+  .ep-overlay {
+    display: none;
+  }
+}
+
+/* Zone droite */
+.ep-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fdf5f3;
+}
+
+/* Header */
+.ep-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.5rem;
+  background: #ffeee3;
+  border-bottom: 1px solid #f0e0dc;
+}
+
+.ep-header-desktop {
+  justify-content: flex-end;
+  background: #ffeee3;
+}
+
+.ep-header-mobile {
+  display: none;
+  justify-content: space-between;
+  background: #ffeee3;
+}
+
+/* Avatar utilisateur */
+.ep-user {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ep-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.ep-username {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* Bouton hamburger */
+.ep-hamburger {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text);
+  padding: 0.3rem;
+}
+
+/* Contenu */
+.ep-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Bouton sombre */
+.btn-dark {
+  padding: 0.5rem 1rem;
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+/* Bouton déconnexion */
+.btn-logout {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: var(--color-text);
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+/* ===========================
+   RESPONSIVE MOBILE (≤ 430px)
+=========================== */
+@media (max-width: 430px) {
+
+  /* Sidebar cachée par défaut */
+  .ep-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100vh;
+    z-index: 1000;
+    transition: left 0.3s ease;
+
+    /* Affiche le bouton fermeture */
+    .ep-close {
+      display: block;
+    }
+
+    /* Overlay sombre derrière la sidebar */
+    .ep-overlay {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Sidebar ouverte */
+    &.open {
+      left: 0;
+
+      .ep-overlay {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+  }
+
+  /* Header mobile visible */
+  .ep-header-desktop {
+    display: none;
+  }
+
+  .ep-header-mobile {
+    display: flex;
+  }
+
+  /* Contenu pleine largeur */
+  .ep-content {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,14 @@
+<header class="header">
+  <span class="header-logo">DataShare</span>
+
+  @if (!isAuthenticated()) {
+    <button class="btn-dark" routerLink="/login">Se connecter</button>
+  }
+
+  @if (isAuthenticated()) {
+    <div class="header-actions">
+      <button class="btn-dark hide-mobile" routerLink="/espace-personnel">Mon espace</button>
+      <button class="btn-dark" (click)="logout()">Déconnexion</button>
+    </div>
+  }
+</header>

@@ -1,0 +1,108 @@
+<!-- Page d'accueil DataShare -->
+
+<!-- État initial — bouton upload -->
+@if (!showForm && !uploadResult) {
+  <div class="upload-trigger center-always">
+    <p>Tu veux partager un fichier ?</p>
+    <button class="btn-upload" (click)="showUploadForm()">
+      <span class="upload-icon">⬆</span>
+    </button>
+  </div>
+}
+
+<!-- Formulaire d'upload -->
+@if (showForm && !uploadResult) {
+  <app-card title="Ajouter un fichier" [errorMessage]="errorMessage">
+
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+
+      <!-- Sélection du fichier -->
+      <div class="form-group">
+        <div class="file-selector" [class.is-invalid]="submitted && !selectedFile">
+          <span class="file-label">
+            @if (selectedFile) {
+              📄 {{ selectedFile.name }}
+            } @else {
+              Aucun fichier sélectionné
+            }
+          </span>
+          <label for="fichier" class="btn-changer">Changer</label>
+          <input id="fichier" type="file" (change)="onFileSelected($event)" hidden />
+        </div>
+        @if (selectedFile) {
+          <div class="file-size">
+            {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} Mo
+          </div>
+        }
+        @if (submitted && !selectedFile) {
+          <div class="invalid-feedback">
+            <div>Veuillez sélectionner un fichier.</div>
+          </div>
+        }
+      </div>
+
+      <!-- Mot de passe optionnel -->
+      <div class="form-group">
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Mot de passe (optionnel)"
+        />
+      </div>
+
+      <!-- Date d'expiration -->
+      <div class="form-group">
+        <select formControlName="dateExpiration"
+          [ngClass]="{ 'is-invalid': submitted && form['dateExpiration'].errors }">
+          <option value="">Expiration</option>
+          <option value="1">Une journée</option>
+          <option value="2">2 jours</option>
+          <option value="3">3 jours</option>
+          <option value="4">4 jours</option>
+          <option value="5">5 jours</option>
+          <option value="6">6 jours</option>
+          <option value="7">Une semaine</option>
+        </select>
+        @if (submitted && form['dateExpiration'].errors) {
+          <div class="invalid-feedback">
+            <div>Veuillez choisir une durée.</div>
+          </div>
+        }
+      </div>
+
+      <!-- Bouton upload -->
+      <button type="submit" class="btn-primary btn-upload-submit" [disabled]="isLoading">
+        {{ isLoading ? 'Chargement...' : '⬆ Téléverser' }}
+      </button>
+
+    </form>
+
+  </app-card>
+}
+
+<!-- État succès -->
+@if (uploadResult) {
+  <app-card title="Ajouter un fichier">
+
+    <div class="file-info">
+      📄 {{ uploadResult.nom }}
+    </div>
+    <p class="success-message">
+      Félicitations, ton fichier sera conservé chez nous pendant 
+      {{ dureeConservation === 1 ? 'une journée' : dureeConservation + ' jours' }} !
+    </p>
+    <div class="link-container">
+      <input
+        type="text"
+        readonly
+        [value]="getDownloadLink()"
+        class="link-input"
+      />
+    </div>
+    <button class="btn-primary" (click)="copyLink()">
+      📋 Copier le lien
+    </button>
+
+  </app-card>
+}

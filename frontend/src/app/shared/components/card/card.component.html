@@ -1,0 +1,17 @@
+<!-- Card générique DataShare -->
+<div class="page-container">
+  <div class="card">
+
+    <!-- Titre -->
+    <h2>{{ title }}</h2>
+
+    <!-- Message d'erreur global -->
+    @if (errorMessage) {
+      <div class="error-callout">{{ errorMessage }}</div>
+    }
+
+    <!-- Contenu projeté -->
+    <ng-content />
+
+  </div>
+</div>              
