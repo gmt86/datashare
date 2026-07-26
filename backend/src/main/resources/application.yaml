@@ -2,8 +2,8 @@ spring:
   application:
     name: datashare-backend  # nom de l'application
 
-  datasource:                # configuration de la connexion BDD
-    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
+  datasource:                # configuration de la connexion BDD En développement local → POSTGRES_HOST non défini → utilise localhost
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB} #En Docker → POSTGRES_HOST=postgres → utilise postgres
     # adresse de la BDD : localhost = même machine, 5432 = port PostgreSQL
     username: ${POSTGRES_USER}    # utilisateur BDD
     password: ${POSTGRES_PASSWORD} # mot de passe BDD
