@@ -95,7 +95,14 @@ it('should show fichier details via token', () => {
       win.localStorage.setItem('auth_token', authToken);
     }
   });
+  // Vérifier le titre
   cy.get('h2', TIME_OUT).should('contain', 'Télécharger un fichier');
+  // Vérifier le nom du fichier
+  cy.get('.file-info', TIME_OUT).should('contain', 'example.json');
+  // Vérifier la taille du fichier
+  cy.get('.file-size', TIME_OUT).should('be.visible');
+  // Vérifier la date d'expiration
+  cy.get('.info-callout', TIME_OUT).should('contain', 'expire');  
 });
 
 
@@ -116,14 +123,22 @@ it('should download a fichier via token', () => {
   });
 });
 
+
 /**
-   * Test — suppression d'un fichier.
-   */
-  it('should delete a fichier', () => {
-    cy.visit('/espace-personnel');
-    cy.get('.fichier-item', TIME_OUT).first().within(() => {
+ * Test — suppression d'un fichier et vérification de sa disparition.
+ */
+it('should delete a fichier', () => {
+  cy.visit('/espace-personnel');
+  // Compte le nombre de fichiers avant suppression
+  cy.get('.fichier-item', TIME_OUT).then((items) => {
+    const countBefore = items.length;
+    // Supprime le premier fichier
+    cy.get('.fichier-item').first().within(() => {
       cy.get('.btn-danger').click();
     });
+    // Vérifie que le nombre de fichiers a diminué
+    cy.get('.fichier-item', TIME_OUT).should('have.length', countBefore - 1);
   });
+});
 
 });
