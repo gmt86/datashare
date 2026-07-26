@@ -1,6 +1,6 @@
 ---
 
-## 🛠️ Stack technique
+## Stack technique
 
 | Composant | Technologie | Version |
 |-----------|-------------|---------|
@@ -12,7 +12,7 @@
 
 ---
 
-## 🚀 Installation et lancement
+## Installation et lancement
 
 ### Prérequis
 
@@ -57,7 +57,7 @@ ng serve
 
 ---
 
-## 🧪 Tests
+## Tests
 
 ### Backend (JUnit — 64 tests — 86% couverture)
 
@@ -91,7 +91,7 @@ k6 run k6/upload-test.js
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 | Document | Description |
 |----------|-------------|
@@ -102,7 +102,7 @@ k6 run k6/upload-test.js
 
 ---
 
-## 🔗 Liens utiles
+## Liens utiles
 
 | Ressource | Lien |
 |-----------|------|
@@ -111,7 +111,7 @@ k6 run k6/upload-test.js
 
 ---
 
-## 👥 Fonctionnalités
+## Fonctionnalités
 
 | US | Fonctionnalité | Statut |
 |----|---------------|--------|
