@@ -35,8 +35,7 @@ export class FichierService {
    * Télécharge un fichier via son token.
    */
   downloadFichier(token: string, request: DownloadRequest): Observable<Blob> {
-  const params = request.password ? `?password=${request.password}` : '';
-  return this.http.post(`${this.API_URL}/${token}/download${params}`, null, {
+  return this.http.post(`${this.API_URL}/${token}/download`, request, {
     responseType: 'blob',
     observe: 'response'
   }).pipe(
