@@ -1,0 +1,25 @@
+# compose.yml — DataShare Monorepo
+# Lance l'ensemble de l'application : PostgreSQL + Backend + Frontend
+
+services:
+
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: datashare-db
+    environment:
+      POSTGRES_DB: datashare
+      POSTGRES_USER: datashare_user
+      POSTGRES_PASSWORD: datashare_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U datashare_user -d datashare"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
