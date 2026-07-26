@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: datashare-backend  # nom de l'application
+
+  datasource:                # configuration de la connexion BDD
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
+    # adresse de la BDD : localhost = même machine, 5432 = port PostgreSQL
+    username: ${POSTGRES_USER}    # utilisateur BDD
+    password: ${POSTGRES_PASSWORD} # mot de passe BDD
+    driver-class-name: org.postgresql.Driver  # pilote PostgreSQL
+
+  jpa:                       # configuration de JPA (ORM)
+    hibernate:
+      ddl-auto: update       # crée/met à jour les tables automatiquement
+    show-sql: true           # affiche les requêtes SQL dans les logs
+    open-in-view: false      # Ferme la connexion dès que possible
+                             # évite de saturer le pool de connexions PostgreSQL
+
+  servlet:                   # verification niveau spring boot
+    multipart:
+      enabled: true          # active l'upload multipart
+      max-file-size: 1GB     # taille maximale du fichier pour validation au niveau du serveur Tomcat 
+      max-request-size: 1GB  # taille maximale de la requête
+
+server:
+  port: 8080                 # port d'écoute de Spring Boot
+
+jwt:
+  secret: ${JWT_SECRET}         # clé secrète pour signer et valider les tokens JWT
+  expiration: ${JWT_EXPIRATION} # durée d'expiration du token en millisecondes
+
+storage:                                 # verification niveau metier (java)
+  path: ${STORAGE_PATH}                  # chemin du dossier de stockage des fichiers
+  allowed-types: ${ALLOWED_TYPES}    # types de fichiers autorises
+  max-file-size-bytes: ${MAX_FILE_SIZE_BYTES} # Taille maximale du fichier pour Validation niveau métier
+  default-expiration-days: ${DEFAULT_EXPIRATION_DAYS} # Durée d'expiration par défaut
+  max-expiration-days: ${MAX_EXPIRATION_DAYS} # Durée d'expiration maximale
+
+logging:
+  level:
+    com.datashare.backend: DEBUG  # traces dans la console: nos logs métier
+    org.springframework.security: WARN # masquer les détails Spring Security
+    org.springframework.web: WARN # masquer les détails HTTP (body inclus)
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
