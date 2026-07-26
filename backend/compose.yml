@@ -1,15 +1,27 @@
-services:          # liste des services à lancer
-  postgres:        # nom du service
-    image: postgres:15        # utilise l'image PostgreSQL version 15
-    container_name: datashare-db  # nom du conteneur
-    environment:              # variables d'environnement
-      POSTGRES_DB: ${POSTGRES_DB}       # nom de la base de données
-      POSTGRES_USER: ${POSTGRES_USER}   # utilisateur
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # mot de passe
+services:
+  # BDD développement
+  postgres:
+    image: postgres:15
+    container_name: datashare-db
+    env_file:
+      - .env
     ports:
-      - "${POSTGRES_PORT}:5432"  # expose le port 5432 sur ta machine
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # sauvegarde les données
+      - postgres_data:/var/lib/postgresql/data
+
+  # BDD tests — séparée et isolée
+  postgres-test:
+    image: postgres:15
+    container_name: datashare-db-test
+    environment:
+      POSTGRES_DB: datashare_test
+      POSTGRES_USER: datashare_user
+      POSTGRES_PASSWORD: datashare_password
+    ports:
+      - "5433:5432"  # port différent pour éviter les conflits
+    tmpfs:
+      - /var/lib/postgresql/data  # données en mémoire — reset à chaque arrêt
 
 volumes:
-  postgres_data:   # volume persistant (données survivent au redémarrage)
+  postgres_data:

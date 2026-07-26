@@ -3,7 +3,7 @@ spring:
     name: datashare-backend-test  # nom de l'application en mode test
 
   datasource:                # même BDD PostgreSQL que le développement
-    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
+    url: jdbc:postgresql://localhost:5433/datashare_test  # port 5433
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
