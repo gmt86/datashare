@@ -1,0 +1,9 @@
+# Windows Zone.Identifier files
+*.Identifier
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

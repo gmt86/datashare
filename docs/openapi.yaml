@@ -1,0 +1,254 @@
+openapi: 3.0.0
+info:
+  title: DataShare API
+  version: 1.0.0
+  description: API de transfert sécurisé de fichiers
+
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/etudiant-aad/DataShare/1.0.0
+  - url: http://localhost:8080
+    description: Serveur local
+
+paths:
+  /api/auth/register:
+    post:
+      summary: Créer un compte
+      tags:
+        - Authentification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: user@example.com
+                password:
+                  type: string
+                  example: monmotdepasse
+      responses:
+        '201':
+          description: Compte créé avec succès
+        '400':
+          description: Données invalides
+        '409':
+          description: Email déjà utilisé
+  /api/auth/login:
+    post:
+      summary: Se connecter
+      tags:
+        - Authentification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: user@example.com
+                password:
+                  type: string
+                  example: monmotdepasse
+      responses:
+        '200':
+          description: Connexion réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiJ9...
+        '401':
+          description: Email ou mot de passe incorrect
+  /api/fichiers:
+    post:
+      summary: Uploader un fichier
+      tags:
+        - Fichiers
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - fichier               
+                - dateExpiration
+              properties:
+                fichier:
+                  type: string
+                  format: binary                
+                dateExpiration:
+                  type: string
+                  format: date
+                  example: "2025-07-01"
+                password:
+                  type: string
+                  example: monmotdepasse
+      responses:
+        '201':
+          description: Fichier uploadé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nom:
+                    type: string
+                  dateExpiration:
+                    type: string
+                  tokenTelechargement:
+                    type: string
+        '400':
+          description: Taille dépassée ou type de fichier interdit
+        '401':
+          description: Non connecté
+    get:
+      summary: Historique des fichiers
+      tags:
+        - Fichiers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Liste des fichiers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    nom:
+                      type: string
+                    taille:
+                      type: integer
+                    dateExpiration:
+                      type: string
+                    tokenTelechargement:
+                      type: string
+                    estProtege:
+                      type: boolean
+                    dateCreation:
+                      type: string
+        '401':
+          description: Non connecté
+  /api/fichiers/{token}:
+    get:
+      summary: Voir les métadonnées d'un fichier
+      tags:
+        - Fichiers
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+          example: a1b2c3d4-e5f6-7890
+      responses:
+        '200':
+          description: Métadonnées du fichier
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nom:
+                    type: string
+                  taille:
+                    type: integer
+                  dateExpiration:
+                    type: string
+                  estProtege:
+                    type: boolean
+                  typeFichier:
+                    type: string
+        '404':
+          description: Token invalide ou expiré
+  /api/fichiers/{token}/download:
+    post:
+      summary: Télécharger un fichier
+      tags:
+        - Fichiers
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+          example: a1b2c3d4-e5f6-7890
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: monmotdepasse
+      responses:
+        '200':
+          description: Fichier téléchargé avec succès
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Mot de passe incorrect
+        '404':
+          description: Token invalide ou expiré
+  /api/fichiers/{id}:
+    delete:
+      summary: Supprimer un fichier
+      tags:
+        - Fichiers
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: a1b2c3d4-e5f6-7890
+      responses:
+        '200':
+          description: Fichier supprimé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Fichier supprimé avec succès
+        '401':
+          description: Non connecté
+        '404':
+          description: Fichier non trouvé
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
