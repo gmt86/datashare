@@ -43,9 +43,9 @@ cd datashare
 docker compose up --build
 ```
 
-- Frontend : http://localhost:4200
-- Backend API : http://localhost:8080
-- Swagger UI : http://localhost:8080/swagger-ui.html
+- Frontend   : http://localhost:4200                     Interface utilisateur Angular
+- API Docs   : http://localhost:8080/api-docs            Contrat OpenAPI JSON                   
+- Swagger UI : http://localhost:8080/swagger-ui.html     Documentation API interactive
 
 ### Option B — Lancement manuel (développement)
 
@@ -132,4 +132,4 @@ k6 run k6/upload-test.js
 | US03 | Création de compte | ✅ |
 | US04 | Connexion sécurisée | ✅ |
 | US05 | Historique des fichiers | ✅ |
-| US06 | Suppression de fichier | ✅ |
+| US06 | Suppression de fichier | ✅ |   
