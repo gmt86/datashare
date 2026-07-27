@@ -1,3 +1,22 @@
+# DataShare — Monorepo
+
+Plateforme de transfert sécurisé de fichiers (type WeTransfer).
+
+## Structure du monorepo
+
+    datashare/
+    ├── backend/          ← API REST Spring Boot 3.5
+    │   ├── Dockerfile    ← Image Docker backend
+    │   └── k6/           ← Scripts de performance
+    ├── frontend/         ← Application Angular 21
+    │   ├── Dockerfile    ← Image Docker frontend
+    │   └── nginx.conf    ← Configuration Nginx
+    ├── docs/             ← Documentation technique
+    │   ├── architecture/ ← Schémas MCD et architecture
+    │   ├── quality/      ← TESTING.md, SECURITY.md, PERF.md, MAINTENANCE.md
+    │   └── screenshots/  ← Captures d'écran
+    ├── compose.yml       ← Lance tout (PostgreSQL + Backend + Frontend)
+    └── README.md         ← Ce fichier
 
 ## Stack technique
 
@@ -8,43 +27,48 @@
 | Base de données | PostgreSQL | 15 |
 | Conteneurisation | Docker | 24.x |
 | Authentification | JWT | HS256 |
-
----
+| Serveur web | Nginx | Alpine |
 
 ## Installation et lancement
 
 ### Prérequis
 
-- Java 21
-- Node.js 24.x
 - Docker et Docker Compose
-- Angular CLI 21.x
 
-### 1. Cloner le repository
+### Option A — Lancement complet avec Docker (recommandé)
 
 ```bash
 git clone git@github.com:gmt86/datashare.git
 cd datashare
+docker compose up --build
 ```
 
-### 2. Démarrer la base de données
+- Frontend : http://localhost:4200
+- Backend API : http://localhost:8080
+- Swagger UI : http://localhost:8080/swagger-ui.html
 
-```bash
-docker compose up -d
-```
+### Option B — Lancement manuel (développement)
 
-### 3. Configurer et lancer le backend
+#### Prérequis supplémentaires
+- Java 21
+- Node.js 24.x
+- Angular CLI 21.x
+
+#### 1. Démarrer la base de données
 
 ```bash
 cd backend
-# Le fichier .env est déjà configuré
+docker compose up postgres -d
+```
+
+#### 2. Lancer le backend
+
+```bash
+cd backend
 ./mvnw spring-boot:run
 ```
 
-➡️ API disponible sur `http://localhost:8080`
-➡️ Swagger UI : `http://localhost:8080/swagger-ui.html`
-
-### 4. Lancer le frontend
+#### 3. Lancer le frontend
 
 ```bash
 cd frontend
@@ -52,17 +76,13 @@ npm install
 ng serve
 ```
 
-➡️ Application disponible sur `http://localhost:4200`
-
----
-
 ## Tests
 
 ### Backend (JUnit — 64 tests — 86% couverture)
 
 ```bash
 cd backend
-docker compose up postgres-test -d  # BDD de test isolée
+docker compose up postgres-test -d  # BDD de test isolée port 5433
 ./mvnw test
 ```
 
@@ -76,7 +96,6 @@ npm run test:jest
 ### E2E (Cypress — 12 tests)
 
 ```bash
-# Backend et frontend doivent être démarrés
 cd frontend
 npx cypress open
 ```
@@ -88,8 +107,6 @@ cd backend
 k6 run k6/upload-test.js
 ```
 
----
-
 ## Documentation
 
 | Document | Description |
@@ -99,16 +116,12 @@ k6 run k6/upload-test.js
 | [PERF.md](./docs/quality/PERF.md) | Tests de performance |
 | [MAINTENANCE.md](./docs/quality/MAINTENANCE.md) | Procédures de maintenance |
 
----
-
 ## Liens utiles
 
 | Ressource | Lien |
 |-----------|------|
 | Swagger UI | http://localhost:8080/swagger-ui.html |
 | API Docs | http://localhost:8080/api-docs |
-
----
 
 ## Fonctionnalités
 
