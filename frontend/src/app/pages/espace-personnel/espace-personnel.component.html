@@ -2,12 +2,12 @@
 
 <!-- Chargement -->
 @if (isLoading) {
-  <div class="loading">Chargement...</div>
+  <div class="loading" role="status" aria-live="polite">Chargement...</div>
 }
 
 <!-- Erreur -->
 @if (errorMessage) {
-  <div class="error-callout">{{ errorMessage }}</div>
+  <div class="error-callout" role="alert" aria-live="assertive">{{ errorMessage }}</div>
 }
 
 <!-- Contenu -->
@@ -16,25 +16,39 @@
   <h2>Mes fichiers</h2>
 
   <!-- Filtre Switch -->
-  <div class="filter-switch">
-    <button [class.active]="filtreActif === 'tous'" (click)="setFiltre('tous')">Tous</button>
-    <button [class.active]="filtreActif === 'actifs'" (click)="setFiltre('actifs')">Actifs</button>
-    <button [class.active]="filtreActif === 'expires'" (click)="setFiltre('expires')">Expiré</button>
+  <div class="filter-switch" role="group" aria-label="Filtrer les fichiers">
+    <button [class.active]="filtreActif === 'tous'" 
+            (click)="setFiltre('tous')"
+            aria-pressed="true"
+            aria-label="Afficher tous les fichiers">Tous</button>
+    <button [class.active]="filtreActif === 'actifs'" 
+            (click)="setFiltre('actifs')"
+            aria-pressed="false"
+            aria-label="Afficher uniquement les fichiers actifs">Actifs</button>
+    <button [class.active]="filtreActif === 'expires'" 
+            (click)="setFiltre('expires')"
+            aria-pressed="false"
+            aria-label="Afficher uniquement les fichiers expirés">Expiré</button>
   </div>
 
   <!-- Liste des fichiers -->
   @if (fichiersFiltres.length === 0) {
-    <p class="empty-message">Aucun fichier trouvé.</p>
+    <p class="empty-message" role="status">Aucun fichier trouvé.</p>
   }
 
   @for (fichier of fichiersFiltres; track fichier.id) {
-    <div class="fichier-item" [class.expire]="fichier.estExpire">
+    <div class="fichier-item" 
+         [class.expire]="fichier.estExpire"
+         role="article"
+         [attr.aria-label]="'Fichier : ' + fichier.nom">
 
       <div class="fichier-info">
         <span class="fichier-nom">
           📄 {{ fichier.nom }}          
         </span>
-        <span class="fichier-statut" [class.expire]="fichier.estExpire">
+        <span class="fichier-statut" 
+              [class.expire]="fichier.estExpire"
+              aria-live="polite">
           @if (fichier.estExpire) {
             Expiré
           } @else {
@@ -46,41 +60,52 @@
       <div class="fichier-actions">
 
         @if (fichier.estProtege) { 
-          <span class="cadenas">🔒</span> 
+          <span class="cadenas" aria-label="Fichier protégé par mot de passe">🔒</span> 
         }
 
-      @if (!fichier.estExpire) {
-        <!-- Desktop : boutons visibles -->
-        <div class="actions-desktop">
-          <button class="btn-danger" (click)="supprimerFichier(fichier.id)">
-            <span class="btn-icon">🗑</span> Supprimer
-          </button>
-          <button class="btn-secondary" (click)="accederFichier(fichier.tokenTelechargement)">
-            Accéder <span class="btn-icon-2">→</span>
-          </button>
-        </div>
+        @if (!fichier.estExpire) {
+          <!-- Desktop : boutons visibles -->
+          <div class="actions-desktop">
+            <button class="btn-danger" 
+                    (click)="supprimerFichier(fichier.id)"
+                    aria-label="Supprimer le fichier {{ fichier.nom }}">
+              <span class="btn-icon" aria-hidden="true">🗑</span> Supprimer
+            </button>
+            <button class="btn-secondary" 
+                    (click)="accederFichier(fichier.tokenTelechargement)"
+                    aria-label="Accéder au fichier {{ fichier.nom }}">
+              Accéder <span class="btn-icon-2" aria-hidden="true">→</span>
+            </button>
+          </div>
 
-        <!-- Mobile : trois points -->
-        <div class="actions-mobile">
-          <button class="btn-menu" (click)="toggleMenu(fichier.id)">⋮</button>
-          @if (menuOuvertId === fichier.id) {
-            <div class="dropdown-menu">
-              <button (click)="supprimerFichier(fichier.id); fermerMenus()">
-                🗑 Supprimer
-              </button>
-              <button (click)="accederFichier(fichier.tokenTelechargement); fermerMenus()">
-                Accéder →
-              </button>
-            </div>
-          }
-        </div>
-      }
-      @if (fichier.estExpire) {
-        <span class="expire-message">
-          Ce fichier a expiré, il n'est plus stocké chez nous
-        </span>
-      }
-    </div>
+          <!-- Mobile : trois points -->
+          <div class="actions-mobile">
+            <button class="btn-menu" 
+                    (click)="toggleMenu(fichier.id)"
+                    [attr.aria-expanded]="menuOuvertId === fichier.id"
+                    aria-label="Menu actions pour {{ fichier.nom }}">⋮</button>
+            @if (menuOuvertId === fichier.id) {
+              <div class="dropdown-menu" role="menu">
+                <button role="menuitem"
+                        (click)="supprimerFichier(fichier.id); fermerMenus()"
+                        aria-label="Supprimer {{ fichier.nom }}">
+                  🗑 Supprimer
+                </button>
+                <button role="menuitem"
+                        (click)="accederFichier(fichier.tokenTelechargement); fermerMenus()"
+                        aria-label="Accéder à {{ fichier.nom }}">
+                  Accéder →
+                </button>
+              </div>
+            }
+          </div>
+        }
+        @if (fichier.estExpire) {
+          <span class="expire-message" role="status">
+            Ce fichier a expiré, il n'est plus stocké chez nous
+          </span>
+        }
+      </div>
 
     </div>
   }

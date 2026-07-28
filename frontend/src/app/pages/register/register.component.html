@@ -1,7 +1,7 @@
 <!-- Page d'inscription DataShare -->
 <app-card title="Créer un compte" [errorMessage]="errorMessage">
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" aria-label="Formulaire d'inscription" novalidate>
 
     <!-- Email -->
     <div class="form-group">
@@ -11,10 +11,12 @@
         type="email"
         formControlName="email"
         placeholder="Saisissez votre email"
+        aria-required="true"
+        [attr.aria-invalid]="submitted && form['email'].errors ? true : null"
         [ngClass]="{ 'is-invalid': submitted && form['email'].errors }"
       />
       @if (submitted && form['email'].errors) {
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" role="alert">
           @if (form['email'].errors!['required']) {
             <div>L'email est requis.</div>
           }
@@ -33,10 +35,12 @@
         type="password"
         formControlName="password"
         placeholder="Saisissez votre mot de passe"
+        aria-required="true"
+        [attr.aria-invalid]="submitted && form['password'].errors ? true : null"
         [ngClass]="{ 'is-invalid': submitted && form['password'].errors }"
       />
       @if (submitted && form['password'].errors) {
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" role="alert">
           @if (form['password'].errors!['required']) {
             <div>Le mot de passe est requis.</div>
           }
@@ -55,25 +59,29 @@
         type="password"
         formControlName="confirmPassword"
         placeholder="Saisissez à nouveau le mot de passe"
+        aria-required="true"
+        [attr.aria-invalid]="submitted && (form['confirmPassword'].errors || registerForm.errors?.['passwordMismatch']) ? true : null"
         [ngClass]="{ 'is-invalid': submitted && (form['confirmPassword'].errors || registerForm.errors?.['passwordMismatch']) }"
       />
       @if (submitted && form['confirmPassword'].errors?.['required']) {
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" role="alert">
           <div>La confirmation du mot de passe est requise.</div>
         </div>
       }
       @if (submitted && registerForm.errors?.['passwordMismatch']) {
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" role="alert">
           <div>Les mots de passe ne correspondent pas.</div>
         </div>
       }
     </div>
 
     <!-- Lien vers login -->
-    <a routerLink="/login" class="link">J'ai déjà un compte</a>
+    <a routerLink="/login" class="link" aria-label="Se connecter à un compte existant">J'ai déjà un compte</a>
 
     <!-- Bouton soumettre -->
-    <button type="submit" class="btn-primary" [disabled]="isLoading">
+    <button type="submit" class="btn-primary" 
+            [disabled]="isLoading"
+            aria-label="Créer mon compte">
       {{ isLoading ? 'Chargement...' : 'Créer mon compte' }}
     </button>
 

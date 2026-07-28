@@ -1,7 +1,7 @@
 <!-- Page de connexion DataShare -->
 <app-card title="Connexion" [errorMessage]="errorMessage">
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" aria-label="Formulaire de connexion" novalidate>
 
     <!-- Email -->
     <div class="form-group">
@@ -11,10 +11,12 @@
         type="email"
         formControlName="email"
         placeholder="Saisissez votre email"
+        aria-required="true"
+        [attr.aria-invalid]="submitted && form['email'].errors ? true : null"
         [ngClass]="{ 'is-invalid': submitted && form['email'].errors }"
       />
       @if (submitted && form['email'].errors) {
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" role="alert">
           @if (form['email'].errors!['required']) {
             <div>L'email est requis.</div>
           }
@@ -33,10 +35,12 @@
         type="password"
         formControlName="password"
         placeholder="Saisissez votre mot de passe"
+        aria-required="true"
+        [attr.aria-invalid]="submitted && form['password'].errors ? true : null"
         [ngClass]="{ 'is-invalid': submitted && form['password'].errors }"
       />
       @if (submitted && form['password'].errors) {
-        <div class="invalid-feedback">
+        <div class="invalid-feedback" role="alert">
           @if (form['password'].errors!['required']) {
             <div>Le mot de passe est requis.</div>
           }
@@ -48,10 +52,12 @@
     </div>
 
     <!-- Lien vers register -->
-    <a routerLink="/register" class="link">Créer un compte</a>
+    <a routerLink="/register" class="link" aria-label="Créer un nouveau compte">Créer un compte</a>
 
     <!-- Bouton soumettre -->
-    <button type="submit" class="btn-primary" [disabled]="isLoading">
+    <button type="submit" class="btn-primary" 
+            [disabled]="isLoading"
+            aria-label="Se connecter">
       {{ isLoading ? 'Chargement...' : 'Connexion' }}
     </button>
 

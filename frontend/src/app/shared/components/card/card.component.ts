@@ -20,4 +20,6 @@ export class CardComponent {
 
   /** Message d'erreur — affiché si non vide */
   @Input() errorMessage: string = '';
+
+  @Input() isMainTitle: boolean = true;
 }

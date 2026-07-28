@@ -108,7 +108,7 @@ it('should show fichier details via token', () => {
     }
   });
   // Vérifier le titre
-  cy.get('h2', TIME_OUT).should('contain', 'Télécharger un fichier');
+  cy.get('h1', TIME_OUT).should('contain', 'Télécharger un fichier');
   // Vérifier le nom du fichier
   cy.get('.file-info', TIME_OUT).should('contain', 'example.json');
   // Vérifier la taille du fichier

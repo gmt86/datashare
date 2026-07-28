@@ -4,38 +4,39 @@
 @if (!showForm && !uploadResult) {
   <div class="upload-trigger center-always">
     <p>Tu veux partager un fichier ?</p>
-    <button class="btn-upload" (click)="showUploadForm()">
-      <span class="upload-icon">⬆</span>
+    <button class="btn-upload" (click)="showUploadForm()" aria-label="Ouvrir le formulaire d'upload">
+      <span class="upload-icon" aria-hidden="true">⬆</span>
     </button>
   </div>
 }
 
 <!-- Formulaire d'upload -->
 @if (showForm && !uploadResult) {
-  <app-card title="Ajouter un fichier" [errorMessage]="errorMessage">
+  <app-card title="Ajouter un fichier" [isMainTitle]="true" [errorMessage]="errorMessage">
 
-    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" aria-label="Formulaire d'upload de fichier" novalidate>
 
       <!-- Sélection du fichier -->
       <div class="form-group">
-        <div class="file-selector" [class.is-invalid]="submitted && !selectedFile">
-          <span class="file-label">
+        <div class="file-selector" [class.is-invalid]="submitted && !selectedFile"
+             role="group" aria-label="Sélection du fichier">
+          <span class="file-label" aria-live="polite">
             @if (selectedFile) {
               📄 {{ selectedFile.name }}
             } @else {
               Aucun fichier sélectionné
             }
           </span>
-          <label for="fichier" class="btn-changer">Changer</label>
-          <input id="fichier" type="file" (change)="onFileSelected($event)" hidden />
+          <label for="fichier" class="btn-changer" aria-label="Changer le fichier sélectionné">Changer</label>
+          <input id="fichier" type="file" (change)="onFileSelected($event)" hidden aria-label="Sélectionner un fichier" />
         </div>
         @if (selectedFile) {
-          <div class="file-size">
+          <div class="file-size" aria-label="Taille du fichier">
             {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} Mo
           </div>
         }
         @if (submitted && !selectedFile) {
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" role="alert">
             <div>Veuillez sélectionner un fichier.</div>
           </div>
         }
@@ -43,17 +44,22 @@
 
       <!-- Mot de passe optionnel -->
       <div class="form-group">
+        <label for="password">Mot de passe (optionnel)</label>
         <input
           id="password"
           type="password"
           formControlName="password"
           placeholder="Mot de passe (optionnel)"
+          aria-label="Protéger le fichier par un mot de passe (optionnel)"
         />
       </div>
 
       <!-- Date d'expiration -->
       <div class="form-group">
-        <select formControlName="dateExpiration"
+        <label for="dateExpiration">Durée de conservation</label>
+        <select id="dateExpiration" formControlName="dateExpiration"
+          aria-required="true"
+          [attr.aria-invalid]="submitted && form['dateExpiration'].errors ? true : null"
           [ngClass]="{ 'is-invalid': submitted && form['dateExpiration'].errors }">
           <option value="">Expiration</option>
           <option value="1">Une journée</option>
@@ -65,14 +71,16 @@
           <option value="7">Une semaine</option>
         </select>
         @if (submitted && form['dateExpiration'].errors) {
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" role="alert">
             <div>Veuillez choisir une durée.</div>
           </div>
         }
       </div>
 
       <!-- Bouton upload -->
-      <button type="submit" class="btn-primary btn-upload-submit" [disabled]="isLoading">
+      <button type="submit" class="btn-primary btn-upload-submit" 
+              [disabled]="isLoading"
+              aria-label="Téléverser le fichier">
         {{ isLoading ? 'Chargement...' : '⬆ Téléverser' }}
       </button>
 
@@ -83,12 +91,12 @@
 
 <!-- État succès -->
 @if (uploadResult) {
-  <app-card title="Ajouter un fichier">
+  <app-card title="Ajouter un fichier" [isMainTitle]="false">
 
-    <div class="file-info">
+    <div class="file-info" aria-label="Fichier uploadé">
       📄 {{ uploadResult.nom }}
     </div>
-    <p class="success-message">
+    <p class="success-message" role="status" aria-live="polite">
       Félicitations, ton fichier sera conservé chez nous pendant 
       {{ dureeConservation === 1 ? 'une journée' : dureeConservation + ' jours' }} !
     </p>
@@ -98,9 +106,10 @@
         readonly
         [value]="getDownloadLink()"
         class="link-input"
+        aria-label="Lien de téléchargement"
       />
     </div>
-    <button class="btn-primary" (click)="copyLink()">
+    <button class="btn-primary" (click)="copyLink()" aria-label="Copier le lien de téléchargement">
       📋 Copier le lien
     </button>
 

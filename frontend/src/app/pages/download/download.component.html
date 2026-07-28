@@ -7,24 +7,24 @@
 @if (fichier && !errorMessage) {
   <app-card title="Télécharger un fichier">
 
-    <div class="file-info">
+    <div class="file-info" aria-label="Informations sur le fichier">
       📄 {{ fichier.nom }}
-      <span class="file-size">{{ formatSize(fichier.taille) }}</span>
+      <span class="file-size" aria-label="Taille du fichier">{{ formatSize(fichier.taille) }}</span>
     </div>
 
     @if (fichier.estExpire) {
-      <div class="error-callout">
+      <div class="error-callout" role="alert" aria-live="assertive">
         Ce lien a expiré, il n'est plus disponible.
       </div>
     }
 
     @if (!fichier.estExpire) {
-      <div class="info-callout">
+      <div class="info-callout" aria-label="Date d'expiration du lien">
         Ce lien expire le {{ fichier.dateExpiration | date:'dd/MM/yyyy' }}
       </div>
 
       @if (fichier.estProtege) {
-        <form [formGroup]="downloadForm">
+        <form [formGroup]="downloadForm" aria-label="Formulaire de mot de passe" novalidate>
           <div class="form-group">
             <label for="password">Mot de passe</label>
             <input
@@ -32,12 +32,17 @@
               type="password"
               formControlName="password"
               placeholder="Saisissez le mot de passe"
+              aria-required="true"
+              aria-label="Mot de passe pour télécharger le fichier"
             />
           </div>
         </form>
       }
 
-      <button class="btn-primary" (click)="onDownload()" [disabled]="isLoading">
+      <button class="btn-primary btn-dark" 
+              (click)="onDownload()" 
+              [disabled]="isLoading"
+              aria-label="Télécharger le fichier">
         {{ isLoading ? 'Chargement...' : '⬇ Télécharger' }}
       </button>
     }

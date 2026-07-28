@@ -1,14 +1,14 @@
-<header class="header">
-  <span class="header-logo">DataShare</span>
+<header class="header" role="banner">
+  <span class="header-logo" aria-label="DataShare - Accueil">DataShare</span>
 
   @if (!isAuthenticated()) {
-    <button class="btn-dark" routerLink="/login">Se connecter</button>
+    <button class="btn-dark" routerLink="/login" aria-label="Se connecter à votre compte">Se connecter</button>
   }
 
   @if (isAuthenticated()) {
-    <div class="header-actions">
-      <button class="btn-dark hide-mobile" routerLink="/espace-personnel">Mon espace</button>
-      <button class="btn-dark" (click)="logout()">Déconnexion</button>
+    <div class="header-actions" role="navigation" aria-label="Navigation principale">
+      <button class="btn-dark hide-mobile" routerLink="/espace-personnel" aria-label="Accéder à mon espace personnel">Mon espace</button>
+      <button class="btn-dark" (click)="logout()" aria-label="Se déconnecter de votre compte">Déconnexion</button>
     </div>
   }
 </header>

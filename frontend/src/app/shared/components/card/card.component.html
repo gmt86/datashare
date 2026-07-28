@@ -3,7 +3,12 @@
   <div class="card">
 
     <!-- Titre -->
-    <h2>{{ title }}</h2>
+    @if (isMainTitle) 
+    {
+     <h1>{{ title }}</h1>
+    } @else {
+      <h2>{{ title }}</h2>
+    }
 
     <!-- Message d'erreur global -->
     @if (errorMessage) {
