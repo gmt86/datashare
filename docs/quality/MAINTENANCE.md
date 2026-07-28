@@ -282,6 +282,18 @@ npx cypress open
 npx cypress run
 ```
 
+## Permissions dossier de stockage
+
+Si l'upload échoue avec "Erreur lors du stockage du fichier",
+vérifier les permissions du dossier :
+
+```bash
+ls -la backend/fichiers/
+# Si owner = root, corriger avec :
+sudo chown -R $USER:$USER backend/fichiers/
+```
+
+
 ### Tests de performance (k6)
 ```bash
 # Backend doit être démarré

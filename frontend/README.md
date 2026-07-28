@@ -105,6 +105,18 @@ npx cypress open
 npx cypress run
 ```
 
+## Permissions dossier de stockage
+
+Si l'upload échoue avec "Erreur lors du stockage du fichier",
+vérifier les permissions du dossier :
+
+```bash
+ls -la backend/fichiers/
+# Si owner = root, corriger avec :
+sudo chown -R $USER:$USER backend/fichiers/
+```
+
+
 Résultat attendu : **12 tests — 2 suites** ✅
 
 ![e2e test](../docs/screenshots/frontend-e2e-auth.png)

@@ -48,7 +48,11 @@ beforeEach(() => {
 it('should upload a file successfully', () => {
     // Intercepte la requête upload
   cy.intercept('POST', '/api/fichiers').as('uploadFichier');
-  cy.visit('/home');
+  cy.visit('/home', {
+    onBeforeLoad(win) {
+      win.localStorage.setItem('auth_token', authToken);
+    }
+  });
 
   cy.get('.btn-upload').click();
 //   cy.wait(500);
@@ -70,7 +74,11 @@ it('should upload a file successfully', () => {
    * Test — affichage des fichiers dans l'espace personnel.
    */
   it('should show fichiers in espace personnel', () => {
-    cy.visit('/espace-personnel');
+    cy.visit('/espace-personnel', {
+    onBeforeLoad(win) {
+      win.localStorage.setItem('auth_token', authToken);
+    }
+  });
     cy.get('.fichier-item', TIME_OUT).should('have.length.greaterThan', 0);
   });
 
@@ -78,7 +86,11 @@ it('should upload a file successfully', () => {
    * Test — filtrage des fichiers par statut.
    */
   it('should filter fichiers', () => {
-    cy.visit('/espace-personnel');
+    cy.visit('/espace-personnel', {
+    onBeforeLoad(win) {
+      win.localStorage.setItem('auth_token', authToken);
+    }
+  });
     cy.get('.filter-switch', TIME_OUT).should('be.visible');
     cy.contains('Actifs').click();
     cy.get('.filter-switch button.active').should('contain', 'Actifs');
@@ -128,7 +140,11 @@ it('should download a fichier via token', () => {
  * Test — suppression d'un fichier et vérification de sa disparition.
  */
 it('should delete a fichier', () => {
-  cy.visit('/espace-personnel');
+  cy.visit('/espace-personnel', {
+    onBeforeLoad(win) {
+      win.localStorage.setItem('auth_token', authToken);
+    }
+  });
   // Compte le nombre de fichiers avant suppression
   cy.get('.fichier-item', TIME_OUT).then((items) => {
     const countBefore = items.length;
