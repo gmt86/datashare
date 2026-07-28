@@ -102,6 +102,7 @@ docker compose up -d
 ```
 
 Couverture actuelle : **88%** ✅
+![Rapport JaCoCo](../screenshots/backend-testunitaire-rapport-couverture-jacoco-2.png)
 
 ### Tests de performance (k6)
 
