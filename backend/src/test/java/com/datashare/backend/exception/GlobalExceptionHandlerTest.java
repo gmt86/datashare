@@ -3,10 +3,16 @@ package com.datashare.backend.exception;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -122,4 +128,46 @@ class GlobalExceptionHandlerTest {
         assertThat(response.getStatusCode().value()).isEqualTo(500);
         assertThat(response.getBody()).containsKey("message");
     }
+
+
+    /**
+ * Test — BadCredentialsException retourne 401.
+ */
+@Test
+void handleBadCredentialsException_shouldReturn401() {
+    // Given
+    BadCredentialsException exception = new BadCredentialsException("Bad credentials");
+
+    // When
+    ResponseEntity<Map<String, String>> response =
+        globalExceptionHandler.handleBadCredentialsException(exception);
+
+    // Then
+    assertThat(response.getStatusCode().value()).isEqualTo(401);
+    assertThat(response.getBody()).containsKey("message");
+}
+
+/**
+ * Test — MethodArgumentNotValidException retourne 400 avec messages de validation.
+ */
+@Test
+void handleValidationException_shouldReturn400WithFieldErrors() {
+    // Given
+    MethodArgumentNotValidException exception = 
+        Mockito.mock(MethodArgumentNotValidException.class);
+    BindingResult bindingResult = Mockito.mock(BindingResult.class);
+    FieldError fieldError = new FieldError("object", "email", "L'email est requis");
+
+    Mockito.when(exception.getBindingResult()).thenReturn(bindingResult);
+    Mockito.when(bindingResult.getFieldErrors()).thenReturn(List.of(fieldError));
+
+    // When
+    ResponseEntity<Map<String, String>> response =
+        globalExceptionHandler.handleValidationException(exception);
+
+    // Then
+    assertThat(response.getStatusCode().value()).isEqualTo(400);
+    assertThat(response.getBody()).containsKey("email");
+    assertThat(response.getBody().get("email")).isEqualTo("L'email est requis");
+}
 }

@@ -19,9 +19,9 @@ Objectif : **70% minimum**
 
 ## Rapport de couverture JaCoCo
 
-Couverture atteinte : **71%** et se trouve dans /target/site/jacoco/index.html
+Couverture atteinte : **88%** et se trouve dans /target/site/jacoco/index.html
 
-![Rapport JaCoCo](../screenshots/backend-testunitaire-rapport-couverture-jacoco.png)
+![Rapport JaCoCo](../screenshots/backend-testunitaire-rapport-couverture-jacoco-2.png)
 
 ## Instructions d'exécution
 
