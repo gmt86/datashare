@@ -29,7 +29,7 @@ describe('CardComponent', () => {
     fixture.componentInstance.title = 'Mon titre';
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h2')?.textContent).toContain('Mon titre');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Mon titre');
   });
 
   /**
