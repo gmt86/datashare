@@ -33,8 +33,15 @@ Objectif : **70% minimum** ✅ Atteint : **86% backend** | **82% frontend**
 | `UtilisateurMapperTest` | 2 | ✅ |
 | `UtilisateurTest` | 4 | ✅ |
 | `ErrorCodeTest` | 5 | ✅ |
-| `BackendApplicationTests` | 1 | ✅ |
+| `BackendAppli cationTests` | 1 | ✅ |
 | **Total** | **66** | ✅ |
+
+## Rapport de couverture JaCoCo
+
+Couverture atteinte : **88%** et se trouve dans /target/site/jacoco/index.html
+
+![Rapport JaCoCo](../screenshots/backend-testunitaire-rapport-couverture-jacoco.png)
+
 
 ## Résultats Jest
 
@@ -49,11 +56,6 @@ Objectif : **70% minimum** ✅ Atteint : **86% backend** | **82% frontend**
 | Composants | 56 | ✅ |
 | **Total** | **83** | ✅ |
 
-## Rapport de couverture JaCoCo
-
-Couverture atteinte : **88%** et se trouve dans /target/site/jacoco/index.html
-
-![Rapport JaCoCo](../screenshots/backend-testunitaire-rapport-couverture-jacoco-2.png)
 
 ## Instructions d'exécution
 
