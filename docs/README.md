@@ -51,7 +51,8 @@ Elle permet aux utilisateurs de :
 |-----------|------|
 | Repository GitHub (monorepo) | https://github.com/gmt86/datashare |
 | Swagger UI | http://localhost:8080/swagger-ui.html |
-| API Docs (OpenAPI) | http://localhost:8080/api-docs |
+| Contrat OpenAPI (JSON) | http://localhost:8080/api-docs |
+| Contrat OpenAPI (fichier) | [openapi.json](./openapi.json) |
 
 ## Installation rapide
 
