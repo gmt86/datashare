@@ -15,7 +15,39 @@
 | 10 | Auth flux     | E2E          | Cypress | Login → Accès espace personnel → Déconnexion   |
 
 ## Seuil de couverture
-Objectif : **70% minimum** 
+Objectif : **70% minimum** ✅ Atteint : **86% backend** | **82% frontend**
+
+## Résultats JUnit
+
+| Classe | Tests | Statut |
+|--------|-------|--------|
+| `AuthServiceImplTest` | 4 | ✅ |
+| `FichierServiceImplTest` | 10 | ✅ |
+| `StorageServiceImplTest` | 6 | ✅ |
+| `JwtServiceImplTest` | 5 | ✅ |
+| `AuthControllerTest` | 4 | ✅ |
+| `FichierControllerTest` | 7 | ✅ |
+| `GlobalExceptionHandlerTest` | 6 | ✅ |
+| `JwtAuthenticationFilterTest` | 5 | ✅ |
+| `FichierMapperTest` | 4 | ✅ |
+| `UtilisateurMapperTest` | 2 | ✅ |
+| `UtilisateurTest` | 4 | ✅ |
+| `ErrorCodeTest` | 5 | ✅ |
+| `BackendApplicationTests` | 1 | ✅ |
+| **Total** | **66** | ✅ |
+
+## Résultats Jest
+
+| Fichier | Tests | Statut |
+|---------|-------|--------|
+| `auth.service.spec.ts` | 6 | ✅ |
+| `error.service.spec.ts` | 6 | ✅ |
+| `fichier.service.spec.ts` | 4 | ✅ |
+| `user.service.spec.ts` | 3 | ✅ |
+| `auth.guard.spec.ts` | 3 | ✅ |
+| `jwt.interceptor.spec.ts` | 5 | ✅ |
+| Composants | 56 | ✅ |
+| **Total** | **83** | ✅ |
 
 ## Rapport de couverture JaCoCo
 
