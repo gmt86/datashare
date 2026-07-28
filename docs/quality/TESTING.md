@@ -38,7 +38,7 @@ npm run test:jest --> pour lancer le test
 npm run test:jest:coverage --> pour générer le rapport de couverture de test
 # Rapport disponible dans : /coverage/index.html
 ```
-![Rapport Jest](../screenshots/frontend-couverture-test-2.png)
+![Rapport Jest](../screenshots/frontend-couverture-test.png)
 
 ### Instructions d'exécution Cypress
 ```Dans des terminaux bash acceder aux dossiers projets backend et frontend 

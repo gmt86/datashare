@@ -73,8 +73,8 @@ ng serve
 ---
 
 ## 📁 Structure du projet
-![Structure frontend](https://raw.githubusercontent.com/gmt86/DevOps-Projet_3-docs---Pilotez_le_developpement_d_une_solution_informatique/main/screenshots/frontend-structure-1.png)
-![Structure frontend](https://raw.githubusercontent.com/gmt86/DevOps-Projet_3-docs---Pilotez_le_developpement_d_une_solution_informatique/main/screenshots/frontend-structure-2.png)
+![Structure frontend](../docs/screenshots/frontend-structure-1.png)
+![Structure frontend](../docs/screenshots/frontend-structure-2.png)
 
 
 ---
@@ -87,14 +87,14 @@ ng serve
 npm run test:jest
 ```
 
-Résultat attendu : **61 tests — 16 suites** ✅
+Résultat attendu : **83 tests — 16 suites** ✅
 
 ### Tests avec couverture
 
 ```bash
 npm run test:jest:coverage
 ```
-![frontend coverage](https://raw.githubusercontent.com/gmt86/DevOps-Projet_3-docs---Pilotez_le_developpement_d_une_solution_informatique/main/screenshots/frontend-couverture-test.png)
+![frontend coverage](../docs/screenshots/frontend-couverture-test.png)
 
 ### Tests E2E (Cypress)
 
@@ -107,8 +107,8 @@ npx cypress run
 
 Résultat attendu : **12 tests — 2 suites** ✅
 
-![e2e test](https://raw.githubusercontent.com/gmt86/DevOps-Projet_3-docs---Pilotez_le_developpement_d_une_solution_informatique/main/screenshots/frontend-e2e-auth.png)
-![e2e test](https://raw.githubusercontent.com/gmt86/DevOps-Projet_3-docs---Pilotez_le_developpement_d_une_solution_informatique/main/screenshots/frontend-e2e-gestionFichier.png)
+![e2e test](../docs/screenshots/frontend-e2e-auth.png)
+![e2e test](../docs/screenshots/frontend-e2e-gestionFichier.png)
 ---
 
 ## 📱 Responsive Design

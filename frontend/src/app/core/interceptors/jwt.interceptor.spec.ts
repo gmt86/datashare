@@ -79,4 +79,56 @@ describe('JwtInterceptor', () => {
     expect(req.request.headers.get('Authorization')).toBeNull();
     req.flush({});
   });
+
+
+  /**
+ * Test — erreur 401 déclenche logout et redirection vers login.
+ */
+it('should logout and navigate to login on 401 error', () => {
+  mockAuthService.getToken.mockReturnValue('my-jwt-token');
+
+  httpClient.get('/api/fichiers').subscribe({
+    error: () => {}
+  });
+
+  const req = httpMock.expectOne('/api/fichiers');
+  req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
+
+  expect(mockAuthService.logout).toHaveBeenCalled();
+  expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+});
+
+/**
+ * Test — erreur 401 sur download ne déclenche pas logout.
+ */
+it('should not logout on 401 error for download endpoint', () => {
+  mockAuthService.getToken.mockReturnValue('my-jwt-token');
+
+  httpClient.post('/api/fichiers/token/download', {}).subscribe({
+    error: () => {}
+  });
+
+  const req = httpMock.expectOne('/api/fichiers/token/download');
+  req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
+
+  expect(mockAuthService.logout).not.toHaveBeenCalled();
+});
+
+/**
+ * Test — erreur 500 ne déclenche pas logout.
+ */
+it('should not logout on 500 error', () => {
+  mockAuthService.getToken.mockReturnValue('my-jwt-token');
+
+  httpClient.get('/api/fichiers').subscribe({
+    error: () => {}
+  });
+
+  const req = httpMock.expectOne('/api/fichiers');
+  req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
+
+  expect(mockAuthService.logout).not.toHaveBeenCalled();
+});
+
+
 });
