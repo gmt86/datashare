@@ -48,3 +48,4 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     enabled: true
+  default-produces-media-type: application/yaml

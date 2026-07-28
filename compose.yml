@@ -27,6 +27,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: datashare-backend
+    environment:
+      POSTGRES_HOST: postgres  
     env_file:
       - ./backend/.env
     ports:
