@@ -44,7 +44,7 @@ cd backend <-- dossier projet
 Ses variables se trouvent dans le fichier `.env` et sont modifiables
 
 
-### 3. Démarrer la base de données
+### 3. Démarrer les bases de données
 
 ```bash
 docker compose up -d
@@ -68,8 +68,8 @@ docker ps
 
 ## 🔗 Endpoints API
 
-Documentation complète disponible sur SwaggerHub :
-👉 https://app.swaggerhub.com/apis/etudiant-aad/DataShare/1.0.0
+ disponible sur :
+👉 http://localhost:8080/swagger-ui.html
 
 | Méthode | Endpoint                         | Description         | Auth |
 |---------|----------------------------------|---------------------|------|
@@ -101,7 +101,7 @@ docker compose up -d
 # Rapport disponible dans : target/site/jacoco/index.html
 ```
 
-Couverture actuelle : **71%** ✅
+Couverture actuelle : **88%** ✅
 
 ### Tests de performance (k6)
 
@@ -113,8 +113,8 @@ k6 run k6/upload-test.js
 ---
 
 ## 📁 Structure du projet
-![Structure backend](https://raw.githubusercontent.com/gmt86/DevOps-Projet_3-docs---Pilotez_le_developpement_d_une_solution_informatique/main/screenshots/backend-structure-1.png)
-![Structure backend](https://raw.githubusercontent.com/gmt86/DevOps-Projet_3-docs---Pilotez_le_developpement_d_une_solution_informatique/main/screenshots/backend-structure-2.png)
+![Structure backend](../docs/screenshots/backend-structure01.png)
+![Structure backend](../docs/screenshots/backend-structure02.png)
 
 
 ---

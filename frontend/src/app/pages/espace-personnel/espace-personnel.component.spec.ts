@@ -93,4 +93,59 @@ describe('EspacePersonnelComponent', () => {
     fixture.componentInstance.setFiltre('actifs');
     expect(fixture.componentInstance.fichiersFiltres.length).toBe(1);
   });
+
+
+
+  /**
+ * Test — fichiersFiltres retourne uniquement les fichiers expirés.
+ */
+it('should return only expired fichiers when filtreActif is expires', () => {
+  const fixture = TestBed.createComponent(EspacePersonnelComponent);
+  fixture.componentInstance.fichiers = [
+    { estExpire: false } as any,
+    { estExpire: true } as any
+  ];
+  fixture.componentInstance.setFiltre('expires');
+  expect(fixture.componentInstance.fichiersFiltres.length).toBe(1);
+  expect(fixture.componentInstance.fichiersFiltres[0].estExpire).toBe(true);
+});
+
+/**
+ * Test — formatSize retourne la taille en Mo.
+ */
+it('should format size correctly', () => {
+  const fixture = TestBed.createComponent(EspacePersonnelComponent);
+  const result = fixture.componentInstance.formatSize(1048576);
+  expect(result).toBe('1.00 Mo');
+});
+
+/**
+ * Test — menuOuvertId est null par défaut.
+ */
+it('should have menuOuvertId null by default', () => {
+  const fixture = TestBed.createComponent(EspacePersonnelComponent);
+  expect(fixture.componentInstance.menuOuvertId).toBeNull();
+});
+
+/**
+ * Test — toggleMenu ouvre et ferme le menu.
+ */
+it('should toggle menu correctly', () => {
+  const fixture = TestBed.createComponent(EspacePersonnelComponent);
+  fixture.componentInstance.toggleMenu('123');
+  expect(fixture.componentInstance.menuOuvertId).toBe('123');
+  fixture.componentInstance.toggleMenu('123');
+  expect(fixture.componentInstance.menuOuvertId).toBeNull();
+});
+
+/**
+ * Test — fermerMenus ferme tous les menus.
+ */
+it('should close all menus', () => {
+  const fixture = TestBed.createComponent(EspacePersonnelComponent);
+  fixture.componentInstance.menuOuvertId = '123';
+  fixture.componentInstance.fermerMenus();
+  expect(fixture.componentInstance.menuOuvertId).toBeNull();
+});
+
 });

@@ -183,5 +183,6 @@ private calculateExpirationDate(days: number): string {
     this.uploadResult = null;
     this.errorMessage = '';
     this.submitted = false;
+    this.showForm = false;
   }
 }

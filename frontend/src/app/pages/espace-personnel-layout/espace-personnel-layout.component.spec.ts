@@ -82,4 +82,8 @@ describe('EspacePersonnelLayoutComponent', () => {
     const fixture = TestBed.createComponent(EspacePersonnelLayoutComponent);
     expect(fixture.componentInstance.getUserInitial()).toBe('T');
   });
+
+
+  
+
 });

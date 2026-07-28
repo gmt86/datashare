@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoginComponent } from './login.component';
 import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../../core/services/user.service';
+import { of, throwError } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 /**
  * Tests unitaires pour LoginComponent.
@@ -70,4 +71,47 @@ describe('LoginComponent', () => {
     });
     expect(fixture.componentInstance.loginForm.valid).toBe(true);
   });
+
+
+  /**
+ * Test — onSubmit avec formulaire invalide ne appelle pas le service.
+ */
+it('should not call userService when form is invalid', () => {
+  const fixture = TestBed.createComponent(LoginComponent);
+  fixture.componentInstance.ngOnInit();
+  fixture.componentInstance.onSubmit();
+  expect(mockUserService.login).not.toHaveBeenCalled();
+  expect(fixture.componentInstance.submitted).toBe(true);
+});
+
+/**
+ * Test — onSubmit réussi redirige vers home.
+ */
+it('should navigate to home on successful login', () => {
+  mockUserService.login.mockReturnValue(of({ accessToken: 'token' }));
+  const fixture = TestBed.createComponent(LoginComponent);
+  fixture.componentInstance.ngOnInit();
+  fixture.componentInstance.loginForm.setValue({
+    email: 'test@datashare.com',
+    password: 'password123'
+  });
+  fixture.componentInstance.onSubmit();
+  expect(mockUserService.login).toHaveBeenCalled();
+});
+
+/**
+ * Test — onSubmit échoué affiche le message d'erreur.
+ */
+it('should show error message on failed login', () => {
+  mockUserService.login.mockReturnValue(throwError(() => ({ status: 401 })));
+  const fixture = TestBed.createComponent(LoginComponent);
+  fixture.componentInstance.ngOnInit();
+  fixture.componentInstance.loginForm.setValue({
+    email: 'test@datashare.com',
+    password: 'password123'
+  });
+  fixture.componentInstance.onSubmit();
+  expect(fixture.componentInstance.isLoading).toBe(false);
+});
+
 });

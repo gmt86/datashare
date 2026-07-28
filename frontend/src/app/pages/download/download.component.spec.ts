@@ -75,4 +75,37 @@ describe('DownloadComponent', () => {
     const fixture = TestBed.createComponent(DownloadComponent);
     expect(fixture.componentInstance.errorMessage).toBe('');
   });
+
+
+
+    /**
+ * Test — formatSize retourne la taille en Mo.
+ */
+it('should format size correctly', () => {
+  const fixture = TestBed.createComponent(DownloadComponent);
+  const result = fixture.componentInstance.formatSize(1048576);
+  expect(result).toBe('1.00 Mo');
+});
+
+/**
+ * Test — fichier est null par défaut.
+ */
+it('should have null fichier by default', () => {
+  const fixture = TestBed.createComponent(DownloadComponent);
+  expect(fixture.componentInstance.fichier).toBeNull();
+});
+
+/**
+ * Test — downloadForm est initialisé après ngOnInit.
+ */
+it('should initialize downloadForm on ngOnInit', () => {
+  const { Subject } = require('rxjs');
+  mockFichierService.getFichierByToken.mockReturnValue(new Subject());
+  
+  const fixture = TestBed.createComponent(DownloadComponent);
+  fixture.componentInstance.ngOnInit();
+  expect(fixture.componentInstance.downloadForm).toBeDefined();
+  expect(fixture.componentInstance.downloadForm.get('password')).toBeDefined();
+});
+
 });

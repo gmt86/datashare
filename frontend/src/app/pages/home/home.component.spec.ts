@@ -88,4 +88,54 @@ describe('HomeComponent', () => {
     fixture.componentInstance.ngOnInit();
     expect(fixture.componentInstance.uploadForm.invalid).toBe(true);
   });
+
+
+  /**
+ * Test — onSubmit sans fichier sélectionné affiche erreur.
+ */
+it('should show error when submitting without file', () => {
+  mockAuthService.isAuthenticated.mockReturnValue(true);
+  const fixture = TestBed.createComponent(HomeComponent);
+  fixture.componentInstance.ngOnInit();
+  fixture.componentInstance.showUploadForm();
+  fixture.componentInstance.onSubmit();
+  expect(fixture.componentInstance.errorMessage).toBe('Veuillez sélectionner un fichier.');
+});
+
+/**
+ * Test — reset réinitialise le formulaire.
+ */
+it('should reset form correctly', () => {
+  const fixture = TestBed.createComponent(HomeComponent);
+  fixture.componentInstance.ngOnInit();
+  fixture.componentInstance.showForm = true;
+  fixture.componentInstance.errorMessage = 'erreur';
+  fixture.componentInstance.reset();
+  expect(fixture.componentInstance.showForm).toBe(false);
+  expect(fixture.componentInstance.errorMessage).toBe('');
+  expect(fixture.componentInstance.selectedFile).toBeNull();
+});
+
+/**
+ * Test — getDownloadLink retourne le bon lien.
+ */
+it('should return correct download link', () => {
+  const fixture = TestBed.createComponent(HomeComponent);
+  fixture.componentInstance.uploadResult = {
+    tokenTelechargement: 'abc-123'
+  } as any;
+  const link = fixture.componentInstance.getDownloadLink();
+  expect(link).toContain('abc-123');
+});
+
+/**
+ * Test — calculateExpirationDate retourne une date future.
+ */
+it('should calculate expiration date correctly', () => {
+  const fixture = TestBed.createComponent(HomeComponent);
+  const date = (fixture.componentInstance as any).calculateExpirationDate(7);
+  expect(date).toBeDefined();
+  expect(new Date(date).getTime()).toBeGreaterThan(Date.now());
+});
+
 });
