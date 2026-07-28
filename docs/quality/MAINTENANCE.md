@@ -305,12 +305,11 @@ k6 run k6/upload-test.js
 
 ## 10. Contacts et ressources
 
-| Ressource                  | Lien                                                                                                    |
-|----------------------------|---------------------------------------------------------------------------------------------------------|
-| Documentation Spring Boot  | https://docs.spring.io/spring-boot                                                                      |
-| Documentation Angular      | https://angular.dev                                                                                     |
-| Documentation k6           | https://k6.io/docs                                                                                      |
-| Documentation PostgreSQL   | https://www.postgresql.org/docs                                                                         |
-| Repository GitHub backend  | https://github.com/gmt86/DevOps-Projet_3-backend---Pilotez_le_developpement_d_une_solution_informatique |
-| Repository GitHub frontend | https://github.com/gmt86/DevOps-Projet_3-frontend---Pilotez_le_developpement_d_une_solution_informatique|
-| Repository GitHub docs     | (ce repo)   |
+| Ressource                  | Lien                                              |
+|----------------------------|---------------------------------------------------|
+| Documentation Spring Boot  | https://docs.spring.io/spring-boot                |
+| Documentation Angular      | https://angular.dev                               |
+| Documentation k6           | https://k6.io/docs                                |
+| Documentation PostgreSQL   | https://www.postgresql.org/docs                   |
+| Repository GitHub          | https://github.com/gmt86/datashare                |
+
